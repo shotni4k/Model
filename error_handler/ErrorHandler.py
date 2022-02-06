@@ -8,9 +8,9 @@ def SaveErrorsEmail(text):
     from email.mime.text import MIMEText                # Текст/HTML
     from email.mime.image import MIMEImage  
 
-    addr_from = 'sim76697@gmail.com' # Адресат 
-    addr_to  = 'shotni4k@gmail.com'  # Получатель
-    password = '7_JPhAjppYT.YBS'  # Пороль
+    addr_from = '----------' # Адресат 
+    addr_to  = '----------'  # Получатель
+    password = '----------'  # Пороль
     
     msg = MIMEMultipart()
     msg['From'] = addr_from
