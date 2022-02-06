@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText                
 from email.mime.image import MIMEImage  
 
+<<<<<<< HEAD
 class ErrorHandler():
     def __init__(self):
         self.conig_data = json.load(open(('JsonFile/config.json')))
@@ -13,6 +14,11 @@ class ErrorHandler():
         self.server.starttls()
         self.server.ehlo()    
         self.server.login(self.conig_data["addr_from"],self.conig_data["password"])
+=======
+    addr_from = '----------' # Адресат 
+    addr_to  = '----------'  # Получатель
+    password = '----------'  # Пороль
+>>>>>>> 8544ae609da761d9f45fdcae9a5758d309697572
     
     def send_message(self,text):
         msg = MIMEMultipart()
@@ -41,5 +47,9 @@ class ErrorHandler():
                                       default= str
                                     ))
 
+<<<<<<< HEAD
         return self.send_message(text)
 
+=======
+    return save_errors_email(text)
+>>>>>>> 8544ae609da761d9f45fdcae9a5758d309697572
