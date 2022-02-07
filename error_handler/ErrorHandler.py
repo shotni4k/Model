@@ -5,27 +5,24 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText                
 from email.mime.image import MIMEImage  
 
-<<<<<<< HEAD
+
 class ErrorHandler():
     def __init__(self):
         self.conig_data = json.load(open(('JsonFile/config.json')))
-        self.server = smtplib.SMTP('smtp.gmail.com', 587)
-        self.server.ehlo()
-        self.server.starttls()
-        self.server.ehlo()    
-        self.server.login(self.conig_data["addr_from"],self.conig_data["password"])
-=======
-    addr_from = '----------' # Адресат 
-    addr_to  = '----------'  # Получатель
-    password = '----------'  # Пороль
->>>>>>> 8544ae609da761d9f45fdcae9a5758d309697572
+        self.server = smtplib.SMTP('smtp.gmail.com', 587) 
+
+    def start_server(self):
+        self.server.set_debuglevel(False) 
+        self.server.starttls() 
+        self.server.login(self.conig_data["addr_from"],self.conig_data["password"]) 
+
     
     def send_message(self,text):
         msg = MIMEMultipart()
         msg['From'] = self.conig_data["addr_from"]
         msg['To'] = self.conig_data["addr_to"]
-        msg['Subject'] = 'Ошибка у бота '  # Тема сообщения
-        body = f'ошибка {text[0]}' # Техт сообщения 
+        msg['Subject'] = 'Ошибка у бота '  
+        body = str(text)
         msg.attach(MIMEText(body, 'palin'))
 
         return self.server.send_message(msg)
@@ -46,10 +43,5 @@ class ErrorHandler():
                                       sort_keys= True,
                                       default= str
                                     ))
-
-<<<<<<< HEAD
         return self.send_message(text)
 
-=======
-    return save_errors_email(text)
->>>>>>> 8544ae609da761d9f45fdcae9a5758d309697572

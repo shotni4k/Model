@@ -5,14 +5,18 @@ from sklearn.model_selection import train_test_split
 from error_handler.ErrorHandler import ErrorHandler
 from colorama import Back,Fore
 
+error_handler = ErrorHandler()
+error_handler.start_server()
 
 class  LogisticRegressionModel():
     """ Класс Модели машинного обучения написанной на основе LogisticRegression() """
     def __init__(self):
         self.vectorizer = CountVectorizer()
         self.classifier =  LogisticRegression()
-        self.config = json.load(open(('jsonfile/BOT_CONFIG')))
-
+        try:
+            self.config = json.load(open(('jsonfile/BOT_CONFIG')))
+        except FileNotFoundError as error:
+            error_handler.save_errors(error)
 
     def get_data_set(self):
         """ Метод разбивающий dataset на тренировочный и тестовый"""
@@ -57,9 +61,5 @@ class  LogisticRegressionModel():
 
 
 model = LogisticRegressionModel()
-error_handler = ErrorHandler()
-try:
-    model.get_data_set()
-except FileNotFoundError as error:
-    error_handler.save_errors(error)
-
+    
+   
