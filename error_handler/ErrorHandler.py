@@ -5,13 +5,20 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText                
 from email.mime.image import MIMEImage  
 
+class MetaSingleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(MetaSingleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
-class ErrorHandler():
+
+class Work_To_Email(metaclass = MetaSingleton):
+    connection = None
+
     def __init__(self):
         self.conig_data = json.load(open(('JsonFile/config.json')))
         self.server = smtplib.SMTP('smtp.gmail.com', 587) 
-
-    def start_server(self):
         self.server.set_debuglevel(False) 
         self.server.starttls() 
         self.server.login(self.conig_data["addr_from"],self.conig_data["password"]) 
@@ -24,10 +31,10 @@ class ErrorHandler():
         msg['Subject'] = 'Ошибка у бота '  
         body = str(text)
         msg.attach(MIMEText(body, 'palin'))
+        self.server.send_message(msg)
+        return self.server.quit()
 
-        return self.server.send_message(msg)
-
-  
+class ErrorHandler():
 
     def save_errors(self,error):
         text =[]
@@ -43,5 +50,5 @@ class ErrorHandler():
                                       sort_keys= True,
                                       default= str
                                     ))
-        return self.send_message(text)
+        return Work_To_Email().send_message(text)
 

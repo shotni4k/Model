@@ -3,10 +3,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from error_handler.ErrorHandler import ErrorHandler
-from colorama import Back,Fore
+from colorama import Fore
 
 error_handler = ErrorHandler()
-error_handler.start_server()
+
 
 class  LogisticRegressionModel():
     """ Класс Модели машинного обучения написанной на основе LogisticRegression() """
